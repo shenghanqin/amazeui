@@ -26,6 +26,7 @@ function navbarInit() {
   var offsetWidth = 16;
   var $share = $navItems.filter('[data-am-navbar-share]');
   var $qrcode = $navItems.filter('[data-am-navbar-qrcode]');
+  var $bdmap = $navItems.filter('[data-am-navbar-bdmap]');
   var activeStatus = 'am-active';
   var $moreActions = $('<ul class="am-navbar-actions"></ul>', {
     id: UI.utils.generateGUID('am-navbar-actions')
@@ -77,6 +78,46 @@ function navbarInit() {
       e.preventDefault();
       $qrModal.modal();
     });
+  }
+
+  if ($bdmap.length) {
+    var mapId = 'am-navbar-bdmap';
+    $mapModal = $('#' + mapId);
+    var mapText = $bdmap.attr('data-am-navbar-bdmap');
+
+    if (!$mapModal.length) {
+      var $mapModal = $('<div class="am-modal am-modal-no-btn" id="">' +
+      '<div class="am-modal-dialog">' +
+        //'<div class="am-modal-hd">' + mapText + '</div>' +
+      '<div class="am-modal-bd"></div></div>' +
+      '</div>', {
+        id: mapId
+      });
+      var $mapContainer = $mapModal.find('.am-modal-bd');
+      //console.log($(window).width());
+      var mapIframewidth = $(window).width()- 70;
+      var mapIframeHeight = $(window).height()- 100;
+      $mapContainer.html('<iframe width="' + mapIframewidth + '" height="'+ mapIframeHeight + '" src="http://map.baidu.com/mobile/webapp/place/detail/qt=s&wd=' + mapText + '&vt=map"></iframe>');
+      $body.append($mapModal);
+
+      if(mapIframewidth > 250) {
+        console.log(mapIframewidth);
+        $mapModal.css({'width': $(window).width()- 50, 'margin-left': -($(window).width()- 50)/2 });
+      }
+
+    }
+
+
+
+    $bdmap.on('click', function (e) {
+      e.preventDefault();
+      //var $mapHtml = '';
+
+      $mapModal.modal();
+
+    });
+    //console.log($bdmap.attr('data-am-navbar-bdmap'));
+
   }
 
   if (navItemsCounter > configItems && navItemsCounter > calcSuiteItems()) {

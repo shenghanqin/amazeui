@@ -42,6 +42,12 @@
 
     "demoContent": [
         {
+            "title": "地图",
+            "link": "###",
+            "icon": "map-marker",
+            "dataApi": "data-am-navbar-bdmap=亿景大厦"
+        },
+        {
             "title": "呼叫",
             "link": "tel:123456789",
             "icon": "phone"
